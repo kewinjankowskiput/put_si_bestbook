@@ -1,0 +1,55 @@
+package com.sample
+
+import com.sample.BestBook;
+import com.sample.BestBookUI;
+
+
+declare Pytanie
+    tresc : String
+    odpowiedz : String
+end
+
+
+function String input(String question, String[] options){
+	BestBookUI $UI = new BestBookUI(question, options);
+	while($UI.odpowiedz == null){System.out.print("");};
+	String odpowiedz = $UI.odpowiedz;
+	return odpowiedz;
+}
+
+rule "Init"
+    when
+    then
+    	String[] options = new String[]{"Yes", "No"};
+    	String odpowiedz = input("Do you want some good popular fiction?", options);
+		insert(new Pytanie("Do you want some good popular fiction?", odpowiedz));
+end
+
+rule "Popular fiction - Yes"
+    when
+        $p : Pytanie(tresc == "Do you want some good popular fiction?", odpowiedz == "Yes")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String odpowiedz = input("Thrillers?", options);
+		insert(new Pytanie("Thrillers?", odpowiedz));
+end
+
+rule "Thrillers - Yes"
+    when
+        $p : Pytanie(tresc == "Thrillers?", odpowiedz == "Yes")
+    then
+        String odpowiedz = input("Your recommendations are Before I Go To Sleep and Nineteen Minutes",
+        new String[]{});
+		insert(new Pytanie("Conclusion-thrillers", "Your recommendations are Before I Go To Sleep and Nineteen Minutes"));
+end
+
+rule "Popular fiction  - No"
+    when
+        $p : Pytanie(tresc == "Do you want some good popular fiction?", odpowiedz == "no")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String odpowiedz = input("How about literary fiction?", options);
+		insert(new Pytanie("How about literary fiction??", odpowiedz));
+end
+
+
