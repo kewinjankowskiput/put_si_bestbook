@@ -288,23 +288,23 @@ rule "History - No"
     when
         $p : Pytanie(tresc == "History?" && odpowiedz == "No")
     then
-        $p.setTresc("Family?");
+        $p.setTresc("Family Literary Fiction?");
         $p.setOpcje(new String[]{"Yes", "No"});
         update($p);
 end
 
-rule "Family - Yes"
+rule "Family2 - Yes"
     when
-        $p : Pytanie(tresc == "Family?" && odpowiedz == "Yes")
+        $p : Pytanie(tresc == "Family Literary Fiction?" && odpowiedz == "Yes")
     then
         $p.setTresc("Your recommendations are The Corrections and Middlesex");
         $p.setOpcje(new String[]{});
         update($p);
 end
 
-rule "Family - No"
+rule "Family2 - No"
     when
-        $p : Pytanie(tresc == "Family?" && odpowiedz == "No")
+        $p : Pytanie(tresc == "Family Literary Fiction?" && odpowiedz == "No")
     then
         $p.setTresc("Looking for Mystery?");
         $p.setOpcje(new String[]{"Yes", "No"});
