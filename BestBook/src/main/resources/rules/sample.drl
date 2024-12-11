@@ -1,175 +1,157 @@
-package com.sample
-
-import com.sample.BestBook;
-import com.sample.BestBookUI;
-
-
-declare Pytanie
-    tresc : String
-    odpowiedz : String
-end
-
-
-function String input(String question, String[] options){
-	BestBookUI $UI = new BestBookUI(question, options);
-	while($UI.odpowiedz == null){System.out.print("");};
-	String odpowiedz = $UI.odpowiedz;
-	return odpowiedz;
-}
-
+package com.sample.rules
+ 
+import com.sample.DroolsTest.Pytanie;
+ 
 rule "Init"
     when
+    $pytanie: Pytanie()
     then
-    	String[] options = new String[]{"Yes", "No"};
-    	String odpowiedz = input("Do you want some good popular fiction?", options);
-		insert(new Pytanie("Do you want some good popular fiction?", odpowiedz));
+    $pytanie.setTresc("Do you want some good popular fiction?");
+    $pytanie.setOpcje(new String[] {"Yes", "No"});
+    update($pytanie);
+        
 end
 
 rule "Popular fiction - Yes"
     when
-        $p : Pytanie(tresc == "Do you want some good popular fiction?", odpowiedz == "Yes")
+        $p : Pytanie(tresc == "Do you want some good popular fiction?" && odpowiedz == "Yes")
     then
-        String[] options = new String[]{"Yes", "No"};
-        String odpowiedz = input("Thrillers?", options);
-	insert(new Pytanie("Thrillers?", odpowiedz));
+        $p.setTresc("Thrillers?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
 end
 
 rule "Thrillers - Yes"
     when
-        $p : Pytanie(tresc == "Thrillers?", odpowiedz == "Yes")
+        $p : Pytanie(tresc == "Thrillers?" && odpowiedz == "Yes")
     then
-        String odpowiedz = input("Your recommendations are Before I Go To Sleep, The Girl with the Dragon Tattoo and Nineteen Minutes",
-        new String[]{});
-		insert(new Pytanie("Conclusion-thrillers", "Your recommendations are Before I Go To Sleep, The Girl with the Dragon Tattoo and Nineteen Minutes"));
+        $p.setTresc("Your recommendations are Before I Go To Sleep, The Girl with the Dragon Tattoo and Nineteen Minutes");
+        $p.setOpcje(new String[]{});
+        update($p);
 end
 
 rule "Thrillers - No"
     when
-        $p : Pytanie(tresc == "Thrillers?", odpowiedz == "No")
+        $p : Pytanie(tresc == "Thrillers?" && odpowiedz == "No")
     then
-        String[] options = new String[]{"Yes", "No"};
-        String odpowiedz = input("Mystery?", options);
-	insert(new Pytanie("Mystery?", odpowiedz));
+        $p.setTresc("Mystery?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
 end
 
 rule "Mystery - Yes"
     when
-        $p : Pytanie(tresc == "Mystery?", odpowiedz == "Yes")
+        $p : Pytanie(tresc == "Mystery?" && odpowiedz == "Yes")
     then
-        String odpowiedz = input("Your recommendations are The Lovely Bones and The Thirteenth Tale",
-        new String[]{});
-	insert(new Pytanie("Conclusion-Mystery", "Your recommendations are The Lovely Bones and The Thirteenth Tale"));
+        $p.setTresc("Your recommendations are The Lovely Bones and The Thirteenth Tale");
+        $p.setOpcje(new String[]{});
+        update($p);
 end
 
 rule "Mystery - No"
     when
-        $p : Pytanie(tresc == "Mystery?", odpowiedz == "No")
+        $p : Pytanie(tresc == "Mystery?"&& odpowiedz == "No")
     then
-        String[] options = new String[]{"Yes", "No"};
-        String odpowiedz = input("Family?", options);
-	insert(new Pytanie("Family?", odpowiedz));
+        $p.setTresc("Family?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
 end
 
 rule "Family - Yes"
     when
-        $p : Pytanie(tresc == "Family?", odpowiedz == "Yes")
+        $p : Pytanie(tresc == "Family?" && odpowiedz == "Yes")
     then
-        String odpowiedz = input("Your recommendations are Room, My Sister's Keeper, The Memory Keeper's Daughter, and The Language of Flowers",
-        new String[]{});
-	insert(new Pytanie("Conclusion-Family", "Your recommendations are Room, My Sister's Keeper, The Memory Keeper's Daughter, and The Language of Flowers"));
+        $p.setTresc("Your recommendations are Room, My Sister's Keeper, The Memory Keeper's Daughter, and The Language of Flowers");
+        $p.setOpcje(new String[]{});
+        update($p);
 end
 
 rule "Family - No"
     when
-        $p : Pytanie(tresc == "Family?", odpowiedz == "No")
+        $p : Pytanie(tresc == "Family?" && odpowiedz == "No")
     then
-        String[] options = new String[]{"Yes", "No"};
-        String odpowiedz = input("Fantasy/Horror?", options);
-	insert(new Pytanie("Fantasy/Horror?", odpowiedz));
+        $p.setTresc("Fantasy/Horror?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
 end
 
 rule "Fantasy/Horror - Yes"
     when
-        $p : Pytanie(tresc == "Fantasy/Horror?", odpowiedz == "Yes")
+        $p : Pytanie(tresc == "Fantasy/Horror?" && odpowiedz == "Yes")
     then
-        String odpowiedz = input("Your recommendations are The Historian",
-        new String[]{});
-	insert(new Pytanie("Conclusion-Fantasy/Horror", "Your recommendations are The Historian"));
+        $p.setTresc("Your recommendations are The Historian");
+        $p.setOpcje(new String[]{});
+        update($p);
 end
 
 rule "Fantasy/Horror - No"
     when
-        $p : Pytanie(tresc == "Fantasy/Horror?", odpowiedz == "No")
+        $p : Pytanie(tresc == "Fantasy/Horror?" && odpowiedz == "No")
     then
-        String[] options = new String[]{"Yes", "No"};
-        String odpowiedz = input("Romance?", options);
-	insert(new Pytanie("Romance?", odpowiedz));
+        $p.setTresc("Romance?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
 end
 
 rule "Romance - Yes"
     when
-        $p : Pytanie(tresc == "Romance?", odpowiedz == "Yes")
+        $p : Pytanie(tresc == "Romance?" && odpowiedz == "Yes")
     then
-        String odpowiedz = input("Your recommendations are The Other Boleyn Girl and Snow Flower and the Secret Fan",
-        new String[]{});
-	insert(new Pytanie("Conclusion-Romance", "Your recommendations are The Other Boleyn Girl and Snow Flower and the Secret Fan"));
+        $p.setTresc("Your recommendations are The Other Boleyn Girl and Snow Flower and the Secret Fan");
+        $p.setOpcje(new String[]{});
+        update($p);
 end
 
 rule "Romance - No"
     when
-        $p : Pytanie(tresc == "Romance?", odpowiedz == "No")
+        $p : Pytanie(tresc == "Romance?"&& odpowiedz == "No")
     then
-        String[] options = new String[]{"Yes", "No"};
-        String odpowiedz = input("Time Travel?", options);
-	insert(new Pytanie("Time Travel?", odpowiedz));
+        $p.setTresc("Time Travel?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
 end
 
 rule "Time Travel - Yes"
     when
-        $p : Pytanie(tresc == "Time Travel?", odpowiedz == "Yes")
+        $p : Pytanie(tresc == "Time Travel?" && odpowiedz == "Yes")
     then
-        String odpowiedz = input("Your recommendations are The Time Traveler's Wife and 11/22/63",
-        new String[]{});
-	insert(new Pytanie("Conclusion-Time Travel", "Your recommendations are The Time Traveler's Wife and 11/22/63"));
+        $p.setTresc("Your recommendations are The Time Traveler's Wife and 11/22/63");
+        $p.setOpcje(new String[]{});
+        update($p);
 end
-
 
 rule "Time Travel - No"
     when
-        $p : Pytanie(tresc == "Time Travel?", odpowiedz == "No")
+        $p : Pytanie(tresc == "Time Travel?" && odpowiedz == "No")
     then
-        String[] options = new String[]{"Yes", "No"};
-        String odpowiedz = input("Suspense?", options);
-	insert(new Pytanie("Suspense?", odpowiedz));
+        $p.setTresc("Suspense?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
 end
 
 rule "Suspense - Yes"
     when
-        $p : Pytanie(tresc == "Suspense?", odpowiedz == "Yes")
+        $p : Pytanie(tresc == "Suspense?" && odpowiedz == "Yes")
     then
-        String odpowiedz = input("Your recommendations are Gone Girl, The Da Vinci Code, and Joyland",
-        new String[]{});
-	insert(new Pytanie("Conclusion-Suspense", "Your recommendations are Gone Girl, The Da Vinci Code, and Joyland"));
+        $p.setTresc("Your recommendations are Gone Girl, The Da Vinci Code, and Joyland");
+        $p.setOpcje(new String[]{});
+        update($p);
 end
 
 rule "Suspense - No"
     when
-        $p : Pytanie(tresc == "Suspense?", odpowiedz == "No")
+        $p : Pytanie(tresc == "Suspense?" && odpowiedz == "No")
     then
-         String odpowiedz = input("Sorry, no more recommendations available.",
-        new String[]{});
-	insert(new Pytanie("Conclusion-No Suspense", "Sorry, no more recommendations available."));
+        $p.setTresc("Sorry, no more recommendations available.");
+        $p.setOpcje(new String[]{});
+        update($p);
 end
 
-
-
-rule "Popular fiction  - No"
+rule "Popular fiction - No"
     when
-        $p : Pytanie(tresc == "Do you want some good popular fiction?", odpowiedz == "no")
+        $p : Pytanie(tresc == "Do you want some good popular fiction?" && odpowiedz == "No")
     then
-        String[] options = new String[]{"Yes", "No"};
-        String odpowiedz = input("How about literary fiction?", options);
-		insert(new Pytanie("How about literary fiction??", odpowiedz));
+        $p.setTresc("How about literary fiction?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
 end
-
-
