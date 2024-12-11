@@ -155,3 +155,375 @@ rule "Popular fiction - No"
         $p.setOpcje(new String[]{"Yes", "No"});
         update($p);
 end
+
+rule "Literary fiction - Yes"
+    when
+        $p : Pytanie(tresc == "How about literary fiction?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Dystopia?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+rule "Dystopia - Yes"
+    when
+        $p : Pytanie(tresc == "Dystopia?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Your recommendations are The Road and Oryx and Crake");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Dystopia - No"
+    when
+        $p : Pytanie(tresc == "Dystopia?" && odpowiedz == "No")
+    then
+        $p.setTresc("Fantasy?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+rule "Fantasy - Yes"
+    when
+        $p : Pytanie(tresc == "Fantasy?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Your recommendations are American Gods");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Fantasy - No"
+    when
+        $p : Pytanie(tresc == "Fantasy?" && odpowiedz == "No")
+    then
+        $p.setTresc("Identity?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+rule "Identity - Yes"
+    when
+        $p : Pytanie(tresc == "Identity?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Your recommendations are White Teeth and The Namesake");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Identity - No"
+    when
+        $p : Pytanie(tresc == "Identity?" && odpowiedz == "No")
+    then
+        $p.setTresc("Magical Realism?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+
+rule "Magical Realism - Yes"
+    when
+        $p : Pytanie(tresc == "Magical Realism?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Your recommendations are Extremely Loud and Incredibly Close and Life of Pi");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Magical Realism - No"
+    when
+        $p : Pytanie(tresc == "Magical Realism?" && odpowiedz == "No")
+    then
+        $p.setTresc("Comic Books?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+rule "Comic Books - Yes"
+    when
+        $p : Pytanie(tresc == "Comic Books?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Your recommendations are The Amazing Adventures of Kavalier & Clay");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Comic Books - No"
+    when
+        $p : Pytanie(tresc == "Comic Books?" && odpowiedz == "No")
+    then
+        $p.setTresc("Crime?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+rule "Crime - Yes"
+    when
+        $p : Pytanie(tresc == "Crime?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Your recommendations are No Country for Old Men");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Crime - No"
+    when
+        $p : Pytanie(tresc == "Crime?" && odpowiedz == "No")
+    then
+        $p.setTresc("History?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+
+rule "History - Yes"
+    when
+        $p : Pytanie(tresc == "History?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Your recommendation is Wolf Hall");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "History - No"
+    when
+        $p : Pytanie(tresc == "History?" && odpowiedz == "No")
+    then
+        $p.setTresc("Family?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+rule "Family - Yes"
+    when
+        $p : Pytanie(tresc == "Family?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Your recommendations are The Corrections and Middlesex");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Family - No"
+    when
+        $p : Pytanie(tresc == "Family?" && odpowiedz == "No")
+    then
+        $p.setTresc("Looking for Mystery?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+rule "Looking for Mystery? - Yes"
+    when
+        $p : Pytanie(tresc == "Looking for Mystery?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Literary or Suspense?");
+        $p.setOpcje(new String[]{"Literary", "Suspense"});
+        update($p);
+end
+
+rule "Literary?"
+    when
+        $p : Pytanie(tresc == "Literary or Suspense?" && odpowiedz == "Literary")
+    then
+        $p.setTresc("Your recommendations are The Sweetness at the Bottom of the Pie and Bel Canto");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Suspense?"
+    when
+        $p : Pytanie(tresc == "Literary or Suspense?" && odpowiedz == "Suspense")
+    then
+        $p.setTresc("Your recommendations are Atonement and The Traitor's Emblem");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Looking for Mystery? - No"
+    when
+        $p : Pytanie(tresc == "Looking for Mystery?" && odpowiedz == "No")
+    then
+        $p.setTresc("Baseball?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+rule "Baseball? - Yes"
+    when
+        $p : Pytanie(tresc == "Baseball?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Your recommendation is The Art of Fielding");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Baseball? - No"
+    when
+        $p : Pytanie(tresc == "Baseball?" && odpowiedz == "No")
+    then
+        $p.setTresc("Discover a new culture?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
+
+
+rule "Discover a new culture? - Yes"
+    when
+        $p : Pytanie(tresc == "Discover a new culture?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Which one would you prefer?");
+        $p.setOpcje(new String[]{"Civil Rights", "Romance", "War" , "Epistolary", "Japan", "Historical"});
+        update($p);
+end
+
+rule "Which one would you prefer? - Civil Rights"
+    when
+        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Civil Rights")
+    then
+        $p.setTresc("Your recommendations are The Help and The Secret Life of Bees");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which one would you prefer? - Romance"
+    when
+        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Romance")
+    then
+        $p.setTresc("Your recommendations are Water for Elephants");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which one would you prefer? - War"
+    when
+        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "War")
+    then
+        $p.setTresc("Your recommendations are Fall of Giants");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which one would you prefer? - Epistolary"
+    when
+        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Epistolary")
+    then
+        $p.setTresc("Your recommendations are The Guernsey Literary and Potato Peel Pie Society");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which one would you prefer? - Japan"
+    when
+        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Japan")
+    then
+        $p.setTresc("Your recommendations are The Thousand Autumns of Jacob De Zoet");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which one would you prefer? - Historical"
+    when
+        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Historical")
+    then
+        $p.setTresc("Your recommendations are The Kite Runner and A Thousand Splendid Suns");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Discover a new culture? - No"
+    when
+        $p : Pytanie(tresc == "Discover a new culture?" && odpowiedz == "No")
+    then
+        $p.setTresc("How about a good Fantasy?");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "How about a good Fantasy? - Yes"
+    when
+        $p : Pytanie(tresc == "How about a good Fantasy?" && odpowiedz == "Yes")
+    then
+        $p.setTresc("Which genre is your favourite?");
+        $p.setOpcje(new String[]{"Epic", "Video Games", "Vampires", "Historical", "Magic", "Literary", "Romance"});
+        update($p);
+end
+
+rule "Which genre is your favourite? - Epic"
+    when
+        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Epic")
+    then
+        $p.setTresc("Your recommendation is A Dance with Dragons");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which genre is your favourite? - Video Games"
+    when
+        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Video Games")
+    then
+        $p.setTresc("Your recommendation is Ready Player One");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which genre is your favourite? - Vampires"
+    when
+        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Vampires")
+    then
+        $p.setTresc("Your recommendation is A Discovery of Witches");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which genre is your favourite? - Historical"
+    when
+        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Historical")
+    then
+        $p.setTresc("Your recommendation is Cloud Atlas");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which genre is your favourite? - Magic"
+    when
+        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Magic")
+    then
+        $p.setTresc("Your recommendations are Jonathan Strange & Mr. Norrell and The Name of the Wind");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which genre is your favourite? - Literary"
+    when
+        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Literary")
+    then
+        $p.setTresc("Your recommendation is Kafka on the Shore");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Which genre is your favourite? - Romance"
+    when
+        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Romance")
+    then
+        $p.setTresc("Your recommendation is Matched");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "How about a good Fantasy? - No"
+    when
+        $p : Pytanie(tresc == "How about a good Fantasy?" && odpowiedz == "No")
+    then
+        $p.setTresc("Sorry, no more recommendations available.");
+        $p.setOpcje(new String[]{});
+        update($p);
+end
+
+rule "Literary fiction - No"
+    when
+        $p : Pytanie(tresc == "How about literary fiction?" && odpowiedz == "No")
+    then
+        $p.setTresc("Fiction for Kids?");
+        $p.setOpcje(new String[]{"Yes", "No"});
+        update($p);
+end
