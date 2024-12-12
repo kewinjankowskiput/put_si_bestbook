@@ -1,529 +1,702 @@
 package com.sample.rules
- 
-import com.sample.DroolsTest.Pytanie;
- 
-rule "Init"
-    when
-    $pytanie: Pytanie()
-    then
-    $pytanie.setTresc("Do you want some good popular fiction?");
-    $pytanie.setOpcje(new String[] {"Yes", "No"});
-    update($pytanie);
-        
+
+import com.sample.GUI;
+
+declare Question
+	question : String
+	answer : String
 end
 
-rule "Popular fiction - Yes"
-    when
-        $p : Pytanie(tresc == "Do you want some good popular fiction?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Thrillers?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
+function void query(Question question, String[] possibleAnswers) {		
+	GUI gui = new GUI(question.getQuestion(), possibleAnswers);
+	gui.waitForAnswer(); question.setAnswer(gui.getAnswer());
+}
+
+function void inform(Question question) {
+	GUI gui = new GUI(question.getQuestion());
+}
+
+rule "Init Books"
+when
+then
+    insert(new Question("Do you want some good popular fiction?", ""));
 end
 
+rule "Init2"
+when
+    q : Question(question == "Do you want some good popular fiction?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Popular Fiction - Yes"
+when
+    q : Question(question == "Do you want some good popular fiction?" && answer == "Yes")
+then
+    insert(new Question("Thrillers?", ""));
+end
+
+rule "Popular Fiction - No"
+when
+    q : Question(question == "Do you want some good popular fiction?" && answer == "No")
+then
+    insert(new Question("How about Literary Fiction?", ""));
+end
+
+rule "Thrillers?"
+when
+	q : Question(question == "Thrillers?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+    
 rule "Thrillers - Yes"
-    when
-        $p : Pytanie(tresc == "Thrillers?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are Before I Go To Sleep, The Girl with the Dragon Tattoo and Nineteen Minutes");
-        $p.setOpcje(new String[]{});
-        update($p);
+when
+    q : Question(question == "Thrillers?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are Before I Go to Sleep and Nineteen Minutes", ""));
+end
+
+rule "Your recommendations are Before I Go to Sleep and Nineteen Minutes"
+	when
+		q : Question(question == "Your recommendations are Before I Go to Sleep and Nineteen Minutes" && answer == "")
+	then
+		inform(q);
 end
 
 rule "Thrillers - No"
-    when
-        $p : Pytanie(tresc == "Thrillers?" && odpowiedz == "No")
-    then
-        $p.setTresc("Mystery?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
+when
+    q : Question(question == "Thrillers?" && answer == "No")
+then
+    insert(new Question("Mystery?", ""));
+end
+
+rule "Mystery?"
+when
+	q : Question(question == "Mystery?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
 end
 
 rule "Mystery - Yes"
-    when
-        $p : Pytanie(tresc == "Mystery?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are The Lovely Bones and The Thirteenth Tale");
-        $p.setOpcje(new String[]{});
-        update($p);
+when
+    q : Question(question == "Mystery?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Lovely Bones and The Thirteenth Tale", ""));
+end
+
+rule "Your recommendations are The Lovely Bones and The Thirteenth Tale"
+	when
+		q : Question(question == "Your recommendations are The Lovely Bones and The Thirteenth Tale" && answer == "")
+	then
+		inform(q);
 end
 
 rule "Mystery - No"
-    when
-        $p : Pytanie(tresc == "Mystery?"&& odpowiedz == "No")
-    then
-        $p.setTresc("Family?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
+when
+    q : Question(question == "Mystery?" && answer == "No")
+then
+    insert(new Question("Family?", ""));
+end
+
+rule "Family?"
+when
+	q : Question(question == "Family?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
 end
 
 rule "Family - Yes"
-    when
-        $p : Pytanie(tresc == "Family?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are Room, My Sister's Keeper, The Memory Keeper's Daughter, and The Language of Flowers");
-        $p.setOpcje(new String[]{});
-        update($p);
+when
+    q : Question(question == "Family?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are Room, My Sister's Keeper, The Memory Keeper's Daughter, and The Language of Flowers", ""));
+end
+
+rule "Your recommendations are Room, My Sister's Keeper, The Memory Keeper's Daughter, and The Language of Flowers"
+	when
+		q : Question(question == "Your recommendations are Room, My Sister's Keeper, The Memory Keeper's Daughter, and The Language of Flowers" && answer == "")
+	then
+		inform(q);
 end
 
 rule "Family - No"
-    when
-        $p : Pytanie(tresc == "Family?" && odpowiedz == "No")
-    then
-        $p.setTresc("Fantasy/Horror?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
+when
+    q : Question(question == "Family?" && answer == "No")
+then
+    insert(new Question("Fantasy/Horror?", ""));
+end
+
+rule "Fantasy/Horror??"
+when
+	q : Question(question == "Fantasy/Horror?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
 end
 
 rule "Fantasy/Horror - Yes"
-    when
-        $p : Pytanie(tresc == "Fantasy/Horror?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are The Historian");
-        $p.setOpcje(new String[]{});
-        update($p);
+when
+    q : Question(question == "Fantasy/Horror?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Historian", ""));
+end
+
+rule "Your recommendations are The Historian"
+	when
+		q : Question(question == "Your recommendations are The Historian" && answer == "")
+	then
+		inform(q);
 end
 
 rule "Fantasy/Horror - No"
-    when
-        $p : Pytanie(tresc == "Fantasy/Horror?" && odpowiedz == "No")
-    then
-        $p.setTresc("Romance?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
+when
+    q : Question(question == "Fantasy/Horror?" && answer == "No")
+then
+    insert(new Question("Romance?", ""));
+end
+
+rule "Romance?"
+when
+	q : Question(question == "Romance?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
 end
 
 rule "Romance - Yes"
-    when
-        $p : Pytanie(tresc == "Romance?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are The Other Boleyn Girl and Snow Flower and the Secret Fan");
-        $p.setOpcje(new String[]{});
-        update($p);
+when
+    q : Question(question == "Romance?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Other Boleyn Girl and Snow Flower and the Secret Fan", ""));
+end
+
+rule "Your recommendations are The Other Boleyn Girl and Snow Flower and the Secret Fan"
+	when
+		q : Question(question == "Your recommendations are The Other Boleyn Girl and Snow Flower and the Secret Fan" && answer == "")
+	then
+		inform(q);
 end
 
 rule "Romance - No"
-    when
-        $p : Pytanie(tresc == "Romance?"&& odpowiedz == "No")
-    then
-        $p.setTresc("Time Travel?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
+when
+    q : Question(question == "Romance?" && answer == "No")
+then
+    insert(new Question("Time Travel?", ""));
+end
+
+rule "Time Travel?"
+when
+	q : Question(question == "Time Travel?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
 end
 
 rule "Time Travel - Yes"
-    when
-        $p : Pytanie(tresc == "Time Travel?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are The Time Traveler's Wife and 11/22/63");
-        $p.setOpcje(new String[]{});
-        update($p);
+when
+    q : Question(question == "Time Travel?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Time Traveler's Wife and 11/22/63", ""));
+end
+
+rule "Your recommendations are The Time Traveler's Wife and 11/22/63"
+	when
+		q : Question(question == "Your recommendations are The Time Traveler's Wife and 11/22/63" && answer == "")
+	then
+		inform(q);
 end
 
 rule "Time Travel - No"
-    when
-        $p : Pytanie(tresc == "Time Travel?" && odpowiedz == "No")
-    then
-        $p.setTresc("Suspense?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-rule "Suspense - Yes"
-    when
-        $p : Pytanie(tresc == "Suspense?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are Gone Girl, The Da Vinci Code, and Joyland");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Suspense - No"
-    when
-        $p : Pytanie(tresc == "Suspense?" && odpowiedz == "No")
-    then
-        $p.setTresc("Sorry, no more recommendations available.");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Popular fiction - No"
-    when
-        $p : Pytanie(tresc == "Do you want some good popular fiction?" && odpowiedz == "No")
-    then
-        $p.setTresc("How about literary fiction?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-rule "Literary fiction - Yes"
-    when
-        $p : Pytanie(tresc == "How about literary fiction?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Dystopia?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-rule "Dystopia - Yes"
-    when
-        $p : Pytanie(tresc == "Dystopia?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are The Road and Oryx and Crake");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Dystopia - No"
-    when
-        $p : Pytanie(tresc == "Dystopia?" && odpowiedz == "No")
-    then
-        $p.setTresc("Fantasy?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-rule "Fantasy - Yes"
-    when
-        $p : Pytanie(tresc == "Fantasy?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are American Gods");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Fantasy - No"
-    when
-        $p : Pytanie(tresc == "Fantasy?" && odpowiedz == "No")
-    then
-        $p.setTresc("Identity?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-rule "Identity - Yes"
-    when
-        $p : Pytanie(tresc == "Identity?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are White Teeth and The Namesake");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Identity - No"
-    when
-        $p : Pytanie(tresc == "Identity?" && odpowiedz == "No")
-    then
-        $p.setTresc("Magical Realism?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-
-rule "Magical Realism - Yes"
-    when
-        $p : Pytanie(tresc == "Magical Realism?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are Extremely Loud and Incredibly Close and Life of Pi");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Magical Realism - No"
-    when
-        $p : Pytanie(tresc == "Magical Realism?" && odpowiedz == "No")
-    then
-        $p.setTresc("Comic Books?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-rule "Comic Books - Yes"
-    when
-        $p : Pytanie(tresc == "Comic Books?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are The Amazing Adventures of Kavalier & Clay");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Comic Books - No"
-    when
-        $p : Pytanie(tresc == "Comic Books?" && odpowiedz == "No")
-    then
-        $p.setTresc("Crime?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-rule "Crime - Yes"
-    when
-        $p : Pytanie(tresc == "Crime?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are No Country for Old Men");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Crime - No"
-    when
-        $p : Pytanie(tresc == "Crime?" && odpowiedz == "No")
-    then
-        $p.setTresc("History?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-
-rule "History - Yes"
-    when
-        $p : Pytanie(tresc == "History?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendation is Wolf Hall");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "History - No"
-    when
-        $p : Pytanie(tresc == "History?" && odpowiedz == "No")
-    then
-        $p.setTresc("Family Literary Fiction?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-rule "Family2 - Yes"
-    when
-        $p : Pytanie(tresc == "Family Literary Fiction?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendations are The Corrections and Middlesex");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Family2 - No"
-    when
-        $p : Pytanie(tresc == "Family Literary Fiction?" && odpowiedz == "No")
-    then
-        $p.setTresc("Looking for Mystery?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
-end
-
-rule "Looking for Mystery? - Yes"
-    when
-        $p : Pytanie(tresc == "Looking for Mystery?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Literary or Suspense?");
-        $p.setOpcje(new String[]{"Literary", "Suspense"});
-        update($p);
-end
-
-rule "Literary?"
-    when
-        $p : Pytanie(tresc == "Literary or Suspense?" && odpowiedz == "Literary")
-    then
-        $p.setTresc("Your recommendations are The Sweetness at the Bottom of the Pie and Bel Canto");
-        $p.setOpcje(new String[]{});
-        update($p);
+when
+    q : Question(question == "Time Travel?" && answer == "No")
+then
+    insert(new Question("Suspense?", ""));
 end
 
 rule "Suspense?"
-    when
-        $p : Pytanie(tresc == "Literary or Suspense?" && odpowiedz == "Suspense")
-    then
-        $p.setTresc("Your recommendations are Atonement and The Traitor's Emblem");
-        $p.setOpcje(new String[]{});
-        update($p);
+when
+	q : Question(question == "Suspense?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
 end
 
-rule "Looking for Mystery? - No"
-    when
-        $p : Pytanie(tresc == "Looking for Mystery?" && odpowiedz == "No")
-    then
-        $p.setTresc("Baseball?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
+rule "Suspense - Yes"
+when
+    q : Question(question == "Suspense?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are Gone Girl, The Da Vinci Code, and Joyland", ""));
 end
 
-rule "Baseball? - Yes"
-    when
-        $p : Pytanie(tresc == "Baseball?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Your recommendation is The Art of Fielding");
-        $p.setOpcje(new String[]{});
-        update($p);
+rule "Your recommendations are Gone Girl, The Da Vinci Code, and Joyland"
+	when
+		q : Question(question == "Your recommendations are Gone Girl, The Da Vinci Code, and Joyland" && answer == "")
+	then
+		inform(q);
 end
 
-rule "Baseball? - No"
-    when
-        $p : Pytanie(tresc == "Baseball?" && odpowiedz == "No")
-    then
-        $p.setTresc("Discover a new culture?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
+rule "Suspense - No"
+when
+    q : Question(question == "Suspense?" && answer == "No")
+then
+    insert(new Question("Sorry, no more recommendations available.", ""));
+end
+
+rule "Sorry, no more recommendations available."
+	when
+		q : Question(question == "Sorry, no more recommendations available." && answer == "")
+	then
+		inform(q);
 end
 
 
-rule "Discover a new culture? - Yes"
-    when
-        $p : Pytanie(tresc == "Discover a new culture?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Which one would you prefer?");
-        $p.setOpcje(new String[]{"Civil Rights", "Romance", "War" , "Epistolary", "Japan", "Historical"});
-        update($p);
+rule "How about Literary Fiction?"
+when
+	q : Question(question == "How about Literary Fiction?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
 end
 
-rule "Which one would you prefer? - Civil Rights"
-    when
-        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Civil Rights")
-    then
-        $p.setTresc("Your recommendations are The Help and The Secret Life of Bees");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which one would you prefer? - Romance"
-    when
-        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Romance")
-    then
-        $p.setTresc("Your recommendations are Water for Elephants");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which one would you prefer? - War"
-    when
-        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "War")
-    then
-        $p.setTresc("Your recommendations are Fall of Giants");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which one would you prefer? - Epistolary"
-    when
-        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Epistolary")
-    then
-        $p.setTresc("Your recommendations are The Guernsey Literary and Potato Peel Pie Society");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which one would you prefer? - Japan"
-    when
-        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Japan")
-    then
-        $p.setTresc("Your recommendations are The Thousand Autumns of Jacob De Zoet");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which one would you prefer? - Historical"
-    when
-        $p : Pytanie(tresc == "Which one would you prefer?" && odpowiedz == "Historical")
-    then
-        $p.setTresc("Your recommendations are The Kite Runner and A Thousand Splendid Suns");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Discover a new culture? - No"
-    when
-        $p : Pytanie(tresc == "Discover a new culture?" && odpowiedz == "No")
-    then
-        $p.setTresc("How about a good Fantasy?");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "How about a good Fantasy? - Yes"
-    when
-        $p : Pytanie(tresc == "How about a good Fantasy?" && odpowiedz == "Yes")
-    then
-        $p.setTresc("Which genre is your favourite?");
-        $p.setOpcje(new String[]{"Epic", "Video Games", "Vampires", "Historical", "Magic", "Literary", "Romance"});
-        update($p);
-end
-
-rule "Which genre is your favourite? - Epic"
-    when
-        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Epic")
-    then
-        $p.setTresc("Your recommendation is A Dance with Dragons");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which genre is your favourite? - Video Games"
-    when
-        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Video Games")
-    then
-        $p.setTresc("Your recommendation is Ready Player One");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which genre is your favourite? - Vampires"
-    when
-        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Vampires")
-    then
-        $p.setTresc("Your recommendation is A Discovery of Witches");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which genre is your favourite? - Historical"
-    when
-        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Historical")
-    then
-        $p.setTresc("Your recommendation is Cloud Atlas");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which genre is your favourite? - Magic"
-    when
-        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Magic")
-    then
-        $p.setTresc("Your recommendations are Jonathan Strange & Mr. Norrell and The Name of the Wind");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which genre is your favourite? - Literary"
-    when
-        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Literary")
-    then
-        $p.setTresc("Your recommendation is Kafka on the Shore");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "Which genre is your favourite? - Romance"
-    when
-        $p : Pytanie(tresc == "Which genre is your favourite?" && odpowiedz == "Romance")
-    then
-        $p.setTresc("Your recommendation is Matched");
-        $p.setOpcje(new String[]{});
-        update($p);
-end
-
-rule "How about a good Fantasy? - No"
-    when
-        $p : Pytanie(tresc == "How about a good Fantasy?" && odpowiedz == "No")
-    then
-        $p.setTresc("Sorry, no more recommendations available.");
-        $p.setOpcje(new String[]{});
-        update($p);
+rule "Literary fiction - Yes"
+when
+    q : Question(question == "How about Literary Fiction?" && answer == "Yes")
+then
+    insert(new Question("Dystopia?", ""));
 end
 
 rule "Literary fiction - No"
-    when
-        $p : Pytanie(tresc == "How about literary fiction?" && odpowiedz == "No")
-    then
-        $p.setTresc("Fiction for Kids?");
-        $p.setOpcje(new String[]{"Yes", "No"});
-        update($p);
+when
+    q : Question(question == "How about Literary Fiction?" && answer == "No")
+then
+    insert(new Question("To zobaczymy?", ""));
 end
+
+rule "Dystopia?"
+when
+    q : Question(question == "Dystopia?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Dystopia - Yes"
+when
+    q : Question(question == "Dystopia?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Road and Oryx and Crake", ""));
+end
+
+rule "Dystopia - No"
+when
+    q : Question(question == "Dystopia?" && answer == "No")
+then
+    insert(new Question("Fantasy?", ""));
+end
+
+rule "Your recommendations are The Road and Oryx and Crake"
+when
+    q : Question(question == "Your recommendations are The Road and Oryx and Crake" && answer == "")
+then
+    inform(q);
+end
+
+rule "Fantasy?"
+when
+    q : Question(question == "Fantasy?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Fantasy - Yes"
+when
+    q : Question(question == "Fantasy?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are American Gods", ""));
+end
+
+rule "Fantasy - No"
+when
+    q : Question(question == "Fantasy?" && answer == "No")
+then
+    insert(new Question("Identity?", ""));
+end
+
+rule "Your recommendations are American Gods"
+when
+    q : Question(question == "Your recommendations are American Gods" && answer == "")
+then
+    inform(q);
+end
+
+rule "Identity?"
+when
+    q : Question(question == "Identity?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Identity - Yes"
+when
+    q : Question(question == "Identity?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are White Teeth and The Namesake", ""));
+end
+
+rule "Identity - No"
+when
+    q : Question(question == "Identity?" && answer == "No")
+then
+    insert(new Question("Magical Realism?", ""));
+end
+
+rule "Your recommendations are White Teeth and The Namesake"
+when
+    q : Question(question == "Your recommendations are White Teeth and The Namesake" && answer == "")
+then
+    inform(q);
+end
+
+rule "Magical Realism?"
+when
+    q : Question(question == "Magical Realism?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Magical Realism - Yes"
+when
+    q : Question(question == "Magical Realism?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are Extremely Loud and Incredibly Close and Life of Pi", ""));
+end
+
+rule "Magical Realism - No"
+when
+    q : Question(question == "Magical Realism?" && answer == "No")
+then
+    insert(new Question("Comic Books?", ""));
+end
+
+rule "Your recommendations are Extremely Loud and Incredibly Close and Life of Pi"
+when
+    q : Question(question == "Your recommendations are Extremely Loud and Incredibly Close and Life of Pi" && answer == "")
+then
+    inform(q);
+end
+
+rule "Comic Books?"
+when
+    q : Question(question == "Comic Books?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Comic Books - Yes"
+when
+    q : Question(question == "Comic Books?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Amazing Adventures of Kavalier & Clay", ""));
+end
+
+rule "Comic Books - No"
+when
+    q : Question(question == "Comic Books?" && answer == "No")
+then
+    insert(new Question("Crime?", ""));
+end
+
+rule "Your recommendations are The Amazing Adventures of Kavalier & Clay"
+when
+    q : Question(question == "Your recommendations are The Amazing Adventures of Kavalier & Clay" && answer == "")
+then
+    inform(q);
+end
+
+rule "Crime?"
+when
+    q : Question(question == "Crime?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Crime - Yes"
+when
+    q : Question(question == "Crime?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are No Country for Old Men", ""));
+end
+
+rule "Crime - No"
+when
+    q : Question(question == "Crime?" && answer == "No")
+then
+    insert(new Question("History?", ""));
+end
+
+rule "Your recommendations are No Country for Old Men"
+when
+    q : Question(question == "Your recommendations are No Country for Old Men" && answer == "")
+then
+    inform(q);
+end
+
+rule "History?"
+when
+    q : Question(question == "History?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "History - Yes"
+when
+    q : Question(question == "History?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is Wolf Hall", ""));
+end
+
+rule "History - No"
+when
+    q : Question(question == "History?" && answer == "No")
+then
+    insert(new Question("Family Literary Fiction?", ""));
+end
+
+rule "Your recommendation is Wolf Hall"
+when
+    q : Question(question == "Your recommendation is Wolf Hall" && answer == "")
+then
+    inform(q);
+end
+
+rule "Family Literary Fiction?"
+when
+    q : Question(question == "Family Literary Fiction?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Family2 - Yes"
+when
+    q : Question(question == "Family Literary Fiction?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Corrections and Middlesex", ""));
+end
+
+rule "Family2 - No"
+when
+    q : Question(question == "Family Literary Fiction?" && answer == "No")
+then
+    insert(new Question("Looking for Mystery?", ""));
+end
+
+rule "Your recommendations are The Corrections and Middlesex"
+when
+    q : Question(question == "Your recommendations are The Corrections and Middlesex" && answer == "")
+then
+    inform(q);
+end
+
+rule "Looking for Mystery?"
+when
+    q : Question(question == "Looking for Mystery?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Literary?"
+when
+    q : Question(question == "Literary or Suspense?" && answer == "Literary")
+then
+    insert(new Question("Your recommendations are The Sweetness at the Bottom of the Pie and Bel Canto", ""));
+end
+
+rule "Mystery - Suspense?"
+when
+    q : Question(question == "Literary or Suspense?" && answer == "Suspense")
+then
+    insert(new Question("Your recommendations are Atonement and The Traitor's Emblem", ""));
+end
+
+rule "Your recommendations are The Sweetness at the Bottom of the Pie and Bel Canto"
+when
+    q : Question(question == "Your recommendations are The Sweetness at the Bottom of the Pie and Bel Canto" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendations are Atonement and The Traitor's Emblem"
+when
+    q : Question(question == "Your recommendations are Atonement and The Traitor's Emblem" && answer == "")
+then
+    inform(q);
+end
+
+rule "Looking for Mystery? - No"
+when
+    q : Question(question == "Looking for Mystery?" && answer == "No")
+then
+    insert(new Question("Baseball?", ""));
+end
+
+rule "Baseball?"
+when
+    q : Question(question == "Baseball?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Baseball? - Yes"
+when
+    q : Question(question == "Baseball?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is The Art of Fielding", ""));
+end
+
+rule "Baseball? - No"
+when
+    q : Question(question == "Baseball?" && answer == "No")
+then
+    insert(new Question("Discover a new culture?", ""));
+end
+
+rule "Your recommendation is The Art of Fielding"
+when
+    q : Question(question == "Your recommendation is The Art of Fielding" && answer == "")
+then
+    inform(q);
+end
+
+rule "Discover a new culture?"
+when
+    q : Question(question == "Discover a new culture?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Discover a new culture? - Yes"
+when
+    q : Question(question == "Discover a new culture?" && answer == "Yes")
+then
+    insert(new Question("Which one would you prefer?", ""));
+end
+
+rule "Discover a new culture? - No"
+when
+    q : Question(question == "Discover a new culture?" && answer == "No")
+then
+    insert(new Question("How about a good Fantasy?", ""));
+end
+
+rule "Which one would you prefer?"
+when
+    q : Question(question == "Which one would you prefer?" && answer == "")
+then
+    query(q, new String[]{"Civil Rights", "Romance", "War" , "Epistolary", "Japan", "Historical"});
+    update(q);
+end
+
+rule "Which one would you prefer? - Civil Rights"
+when
+    q : Question(question == "Which one would you prefer?" && answer == "Civil Rights")
+then
+    insert(new Question("Your recommendations are The Help and The Secret Life of Bees", ""));
+end
+
+rule "Which one would you prefer? - Romance"
+when
+    q : Question(question == "Which one would you prefer?" && answer == "Romance")
+then
+    insert(new Question("Your recommendations are Water for Elephants", ""));
+end
+
+rule "Which one would you prefer? - War"
+when
+    q : Question(question == "Which one would you prefer?" && answer == "War")
+then
+    insert(new Question("Your recommendations are Fall of Giants", ""));
+end
+
+rule "Which one would you prefer? - Epistolary"
+when
+    q : Question(question == "Which one would you prefer?" && answer == "Epistolary")
+then
+    insert(new Question("Your recommendations are The Guernsey Literary and Potato Peel Pie Society", ""));
+end
+
+rule "Which one would you prefer? - Japan"
+when
+    q : Question(question == "Which one would you prefer?" && answer == "Japan")
+then
+    insert(new Question("Your recommendations are The Thousand Autumns of Jacob De Zoet", ""));
+end
+
+rule "Which one would you prefer? - Historical"
+when
+    q : Question(question == "Which one would you prefer?" && answer == "Historical")
+then
+    insert(new Question("Your recommendations are The Kite Runner and A Thousand Splendid Suns", ""));
+end
+
+rule "Your recommendations are The Help and The Secret Life of Bees"
+when
+    q : Question(question == "Your recommendations are The Help and The Secret Life of Bees" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendations are Water for Elephants"
+when
+    q : Question(question == "Your recommendations are Water for Elephants" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendations are Fall of Giants"
+when
+    q : Question(question == "Your recommendations are Fall of Giants" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendations are The Guernsey Literary and Potato Peel Pie Society"
+when
+    q : Question(question == "Your recommendations are The Guernsey Literary and Potato Peel Pie Society" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendations are The Thousand Autumns of Jacob De Zoet"
+when
+    q : Question(question == "Your recommendations are The Thousand Autumns of Jacob De Zoet" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendations are The Kite Runner and A Thousand Splendid Suns"
+when
+    q : Question(question == "Your recommendations are The Kite Runner and A Thousand Splendid Suns" && answer == "")
+then
+    inform(q);
+end
+
+
+
+
+
+
