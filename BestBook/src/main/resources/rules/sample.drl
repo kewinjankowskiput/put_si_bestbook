@@ -56,12 +56,12 @@ rule "Thrillers - Yes"
 when
     q : Question(question == "Thrillers?" && answer == "Yes")
 then
-    insert(new Question("Your recommendations are Before I Go to Sleep and Nineteen Minutes", ""));
+    insert(new Question("Your recommendations are Before I Go to Sleep, Nineteen Minutes, and The Girl with the Dragon Tattoo", ""));
 end
 
-rule "Your recommendations are Before I Go to Sleep and Nineteen Minutes"
+rule "Your recommendations are Before I Go to Sleep, Nineteen Minutes, and The Girl with the Dragon Tattoo"
 	when
-		q : Question(question == "Your recommendations are Before I Go to Sleep and Nineteen Minutes" && answer == "")
+		q : Question(question == "Your recommendations are Before I Go to Sleep, Nineteen Minutes, and The Girl with the Dragon Tattoo" && answer == "")
 	then
 		inform(q);
 end
@@ -254,7 +254,6 @@ rule "Sorry, no more recommendations available."
 		inform(q);
 end
 
-
 rule "How about Literary Fiction?"
 when
 	q : Question(question == "How about Literary Fiction?" && answer == "")
@@ -274,7 +273,7 @@ rule "Literary fiction - No"
 when
     q : Question(question == "How about Literary Fiction?" && answer == "No")
 then
-    insert(new Question("To zobaczymy?", ""));
+    insert(new Question("How about Fiction for Kids?", ""));
 end
 
 rule "Dystopia?"
@@ -318,7 +317,7 @@ rule "Fantasy - Yes"
 when
     q : Question(question == "Fantasy?" && answer == "Yes")
 then
-    insert(new Question("Your recommendations are American Gods", ""));
+    insert(new Question("Your recommendations are American Gods and Never Let Me Go", ""));
 end
 
 rule "Fantasy - No"
@@ -328,9 +327,9 @@ then
     insert(new Question("Identity?", ""));
 end
 
-rule "Your recommendations are American Gods"
+rule "Your recommendations are American Gods and Never Let Me Go"
 when
-    q : Question(question == "Your recommendations are American Gods" && answer == "")
+    q : Question(question == "Your recommendations are American Gods and Never Let Me Go" && answer == "")
 then
     inform(q);
 end
@@ -347,7 +346,7 @@ rule "Identity - Yes"
 when
     q : Question(question == "Identity?" && answer == "Yes")
 then
-    insert(new Question("Your recommendations are White Teeth and The Namesake", ""));
+    insert(new Question("Your recommendations are White Teeth, The Brief Wondrous Life of Oscar Wao, and The Namesake", ""));
 end
 
 rule "Identity - No"
@@ -357,9 +356,9 @@ then
     insert(new Question("Magical Realism?", ""));
 end
 
-rule "Your recommendations are White Teeth and The Namesake"
+rule "Your recommendations are White Teeth, The Brief Wondrous Life of Oscar Wao, and The Namesake"
 when
-    q : Question(question == "Your recommendations are White Teeth and The Namesake" && answer == "")
+    q : Question(question == "Your recommendations are White Teeth, The Brief Wondrous Life of Oscar Wao, and The Namesake" && answer == "")
 then
     inform(q);
 end
@@ -376,7 +375,7 @@ rule "Magical Realism - Yes"
 when
     q : Question(question == "Magical Realism?" && answer == "Yes")
 then
-    insert(new Question("Your recommendations are Extremely Loud and Incredibly Close and Life of Pi", ""));
+    insert(new Question("Your recommendations are The History of Love, Extremely Loud and Incredibly Close, Life of Pi, and Everything is Illuminated", ""));
 end
 
 rule "Magical Realism - No"
@@ -386,9 +385,9 @@ then
     insert(new Question("Comic Books?", ""));
 end
 
-rule "Your recommendations are Extremely Loud and Incredibly Close and Life of Pi"
+rule "Your recommendations are The History of Love, Extremely Loud and Incredibly Close, Life of Pi, and Everything is Illuminated"
 when
-    q : Question(question == "Your recommendations are Extremely Loud and Incredibly Close and Life of Pi" && answer == "")
+    q : Question(question == "Your recommendations are The History of Love, Extremely Loud and Incredibly Close, Life of Pi, and Everything is Illuminated" && answer == "")
 then
     inform(q);
 end
@@ -517,30 +516,46 @@ then
     update(q);
 end
 
+rule "Looking for Mystery - Yes"
+when
+    q : Question(question == "Looking for Mystery?" && answer == "Yes")
+then
+    insert(new Question("Literary or Suspense?", ""));
+end
+
+rule "Literary or Suspense?"
+when
+    q : Question(question == "Literary or Suspense?" && answer == "")
+then
+    query(q, new String[]{"Literary", "Suspense"});
+    update(q);
+end
+
+
 rule "Literary?"
 when
     q : Question(question == "Literary or Suspense?" && answer == "Literary")
 then
-    insert(new Question("Your recommendations are The Sweetness at the Bottom of the Pie and Bel Canto", ""));
+    insert(new Question("Your recommendations are The Sweetness at the Bottom of the Pie", ""));
 end
 
 rule "Mystery - Suspense?"
 when
     q : Question(question == "Literary or Suspense?" && answer == "Suspense")
 then
-    insert(new Question("Your recommendations are Atonement and The Traitor's Emblem", ""));
+    insert(new Question("Your recommendations are Atonement, The Traitor's Emblem, The Shadow of the Wind, Bel Canto, and The Curious Incident of the Dog in the Night-Time", ""));
 end
 
-rule "Your recommendations are The Sweetness at the Bottom of the Pie and Bel Canto"
+rule "Your recommendations are The Sweetness at the Bottom of the Pie"
 when
-    q : Question(question == "Your recommendations are The Sweetness at the Bottom of the Pie and Bel Canto" && answer == "")
+    q : Question(question == "Your recommendations are The Sweetness at the Bottom of the Pie" && answer == "")
 then
     inform(q);
 end
 
-rule "Your recommendations are Atonement and The Traitor's Emblem"
+rule "Your recommendations are Atonement, The Traitor's Emblem, The Shadow of the Wind, Bel Canto, and The Curious Incident of the Dog in the Night-Time"
 when
-    q : Question(question == "Your recommendations are Atonement and The Traitor's Emblem" && answer == "")
+    q : Question(question == "Your recommendations are Atonement, The Traitor's Emblem, The Shadow of the Wind, Bel Canto, and The Curious Incident of the Dog in the Night-Time" && answer == "")
 then
     inform(q);
 end
@@ -622,14 +637,14 @@ rule "Which one would you prefer? - Romance"
 when
     q : Question(question == "Which one would you prefer?" && answer == "Romance")
 then
-    insert(new Question("Your recommendations are Water for Elephants", ""));
+    insert(new Question("Your recommendation is Water for Elephants", ""));
 end
 
 rule "Which one would you prefer? - War"
 when
     q : Question(question == "Which one would you prefer?" && answer == "War")
 then
-    insert(new Question("Your recommendations are Fall of Giants", ""));
+    insert(new Question("Your recommendation is Fall of Giants", ""));
 end
 
 rule "Which one would you prefer? - Epistolary"
@@ -643,7 +658,7 @@ rule "Which one would you prefer? - Japan"
 when
     q : Question(question == "Which one would you prefer?" && answer == "Japan")
 then
-    insert(new Question("Your recommendations are The Thousand Autumns of Jacob De Zoet", ""));
+    insert(new Question("Your recommendation is The Thousand Autumns of Jacob De Zoet", ""));
 end
 
 rule "Which one would you prefer? - Historical"
@@ -660,16 +675,16 @@ then
     inform(q);
 end
 
-rule "Your recommendations are Water for Elephants"
+rule "Your recommendation is Water for Elephants"
 when
-    q : Question(question == "Your recommendations are Water for Elephants" && answer == "")
+    q : Question(question == "Your recommendation is Water for Elephants" && answer == "")
 then
     inform(q);
 end
 
-rule "Your recommendations are Fall of Giants"
+rule "Your recommendation is Fall of Giants"
 when
-    q : Question(question == "Your recommendations are Fall of Giants" && answer == "")
+    q : Question(question == "Your recommendation is Fall of Giants" && answer == "")
 then
     inform(q);
 end
@@ -681,9 +696,9 @@ then
     inform(q);
 end
 
-rule "Your recommendations are The Thousand Autumns of Jacob De Zoet"
+rule "Your recommendation is The Thousand Autumns of Jacob De Zoet"
 when
-    q : Question(question == "Your recommendations are The Thousand Autumns of Jacob De Zoet" && answer == "")
+    q : Question(question == "Your recommendation is The Thousand Autumns of Jacob De Zoet" && answer == "")
 then
     inform(q);
 end
@@ -695,8 +710,890 @@ then
     inform(q);
 end
 
+rule "How about a good Fantasy?"
+when
+	q : Question(question == "How about a good Fantasy?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
+end
 
+rule "How about a good Fantasy? - Yes"
+when
+    q : Question(question == "How about a good Fantasy?" && answer == "Yes")
+then
+    insert(new Question("What kind of Fantasy?", ""));
+end
 
+rule "What kind of Fantasy?"
+when
+    q : Question(question == "What kind of Fantasy?" && answer == "")
+then
+    query(q, new String[]{"Magic", "Literary", "Romance" , "Vampires", "Historical", "Epic", "Video Games"});
+    update(q);
+end
 
+rule "How about a good Fantasy? - No"
+when
+    q : Question(question == "How about a good Fantasy?" && answer == "No")
+then
+    insert(new Question("Sorry, no more recommendations available.", ""));
+end
+
+rule "What kind of Fantasy? - Magic"
+when
+    q : Question(question == "What kind of Fantasy?" && answer == "Magic")
+then
+    insert(new Question("Your recommendations are Johnathan Strange & Mr. Nowell and The Name of the Wind", ""));
+end
+
+rule "Your recommendations are Johnathan Strange & Mr. Nowell and The Name of the Wind"
+when
+    q : Question(question == "Your recommendations are Johnathan Strange & Mr. Nowell and The Name of the Wind" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Fantasy? - Literary"
+when
+    q : Question(question == "What kind of Fantasy?" && answer == "Literary")
+then
+    insert(new Question("Your recommendation is Kafka on the Shore", ""));
+end
+
+rule "Your recommendation is Kafka on the Shore"
+when
+    q : Question(question == "Your recommendation is Kafka on the Shore" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Fantasy? - Romance"
+when
+    q : Question(question == "What kind of Fantasy?" && answer == "Romance")
+then
+    insert(new Question("Your recommendation is Matched", ""));
+end
+
+rule "Your recommendation is Matched"
+when
+    q : Question(question == "Your recommendation is Matched" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Fantasy? - Vampires"
+when
+    q : Question(question == "What kind of Fantasy?" && answer == "Vampires")
+then
+    insert(new Question("Your recommendation is A Discovery of Witches", ""));
+end
+
+rule "Your recommendation is A Discovery of Witches"
+when
+    q : Question(question == "Your recommendation is A Discovery of Witches" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Fantasy? - Historical"
+when
+    q : Question(question == "What kind of Fantasy?" && answer == "Historical")
+then
+    insert(new Question("Your recommendation is Cloud Atlas", ""));
+end
+
+rule "Your recommendation is Cloud Atlas"
+when
+    q : Question(question == "Your recommendation is Cloud Atlas" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Fantasy? - Epic"
+when
+    q : Question(question == "What kind of Fantasy?" && answer == "Epic")
+then
+    insert(new Question("Your recommendation is A Dance With Dragons", ""));
+end
+
+rule "Your recommendation is A Dance With Dragons"
+when
+    q : Question(question == "Your recommendation is A Dance With Dragons" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Fantasy? - Video Games"
+when
+    q : Question(question == "What kind of Fantasy?" && answer == "Video Games")
+then
+    insert(new Question("Your recommendation is Ready Player One", ""));
+end
+
+rule "Your recommendation is Ready Player One"
+when
+    q : Question(question == "Your recommendation is Ready Player One" && answer == "")
+then
+    inform(q);
+end
+
+rule "How about Fiction for Kids?"
+when
+	q : Question(question == "How about Fiction for Kids?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Fiction for Kids - Yes"
+when
+    q : Question(question == "How about Fiction for Kids?" && answer == "Yes")
+then
+    insert(new Question("Young Adults?", ""));
+end
+
+rule "Fiction for Kids - No"
+when
+    q : Question(question == "How about Fiction for Kids?" && answer == "No")
+then
+    insert(new Question("Looking for Nonfiction?", ""));
+end
+
+rule "Young Adults?"
+when
+    q : Question(question == "Young Adults?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Young Adults - Yes"
+when
+    q : Question(question == "Young Adults?" && answer == "Yes")
+then
+    insert(new Question("Historical or Humor?", ""));
+end
+
+rule "Historical or Humor?"
+when
+    q : Question(question == "Historical or Humor?" && answer == "")
+then
+    query(q, new String[]{"Literary", "Suspense"});
+    update(q);
+end
+
+rule "Historical or Humor? - Historical"
+when
+    q : Question(question == "Historical or Humor?" && answer == "Historical")
+then
+    insert(new Question("Your recommendation is Diary of a Wimpy Kid", ""));
+end
+
+rule "Historical or Humor - Humor?"
+when
+    q : Question(question == "Historical or Humor?" && answer == "Humor")
+then
+    insert(new Question("Your recommendation is The Book Thief", ""));
+end
+
+rule "Your recommendation is Diary of a Wimpy Kid"
+when
+    q : Question(question == "Your recommendation is Diary of a Wimpy Kid" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendation is The Book Thief"
+when
+    q : Question(question == "Your recommendation is The Book Thief" && answer == "")
+then
+    inform(q);
+end
+
+rule "Young Adults? - No"
+when
+    q : Question(question == "Young Adults?" && answer == "No")
+then
+    insert(new Question("Children's Literature?", ""));
+end
+
+rule "Children's Literature?"
+when
+    q : Question(question == "Children's Literature?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Children's Literature - Yes"
+when
+    q : Question(question == "Children's Literature?" && answer == "Yes")
+then
+    insert(new Question("What kind of Children's Literature?", ""));
+end
+
+rule "What kind of Children's Literature?"
+when
+    q : Question(question == "What kind of Children's Literature?" && answer == "")
+then
+    query(q, new String[]{"Coming of Age", "Thriller", "Fantasy", "Peril"});
+    update(q);
+end
+
+rule "What kind of Children's Literature? - Coming of Age"
+when
+    q : Question(question == "What kind of Children's Literature?" && answer == "Coming of Age")
+then
+    insert(new Question("Your recommendation is Wonder", ""));
+end
+
+rule "What kind of Children's Literature - Thriller?"
+when
+    q : Question(question == "What kind of Children's Literature?" && answer == "Thriller")
+then
+    insert(new Question("Your recommendation is The Lightning Thief", ""));
+end
+
+rule "Your recommendation is Wonder"
+when
+    q : Question(question == "Your recommendation is Wonder" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendation is The Lightning Thief"
+when
+    q : Question(question == "Your recommendation is The Lightning Thief" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Children's Literature? - Fantasy"
+when
+    q : Question(question == "What kind of Children's Literature?" && answer == "Fantasy")
+then
+    insert(new Question("Your recommendations are Harry Potter and the Deathly Hollows, Coraline, and The Graveyard Book", ""));
+end
+
+rule "What kind of Children's Literature - Peril?"
+when
+    q : Question(question == "What kind of Children's Literature?" && answer == "Peril")
+then
+    insert(new Question("Your recommendation is A Series of Unfortunate Events: The End", ""));
+end
+
+rule "Your recommendations are Harry Potter and the Deathly Hollows, Coraline, and The Graveyard Book"
+when
+    q : Question(question == "Your recommendations are Harry Potter and the Deathly Hollows, Coraline, and The Graveyard Book" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendation is A Series of Unfortunate Events: The End"
+when
+    q : Question(question == "Your recommendation is A Series of Unfortunate Events: The End" && answer == "")
+then
+    inform(q);
+end
+
+rule "Children's Literature? - No"
+when
+    q : Question(question == "Children's Literature?" && answer == "No")
+then
+    insert(new Question("Teen Literature?", ""));
+end
+
+rule "Teen Literature?"
+when
+    q : Question(question == "Teen Literature?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Teen Literature - Yes"
+when
+    q : Question(question == "Teen Literature?" && answer == "Yes")
+then
+    insert(new Question("What kind of Teen Literature?", ""));
+end
+
+rule "What kind of Teen Literature?"
+when
+    q : Question(question == "What kind of Teen Literature?" && answer == "")
+then
+    query(q, new String[]{"Historical", "Thriller", "Fantasy", "Relationships", "Vampires"});
+    update(q);
+end
+
+rule "What kind of Teen Literature? - Historical"
+when
+    q : Question(question == "What kind of Teen Literature?" && answer == "Historical")
+then
+    insert(new Question("Your recommendation is Clockwork Angel", ""));
+end
+
+rule "What kind of Teen Literature - Thriller?"
+when
+    q : Question(question == "What kind of Teen Literature?" && answer == "Thriller")
+then
+    insert(new Question("Your recommendation is The Hunger Games", ""));
+end
+
+rule "Your recommendation is Clockwork Angel"
+when
+    q : Question(question == "Your recommendation is Clockwork Angel" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendation is The Hunger Games"
+when
+    q : Question(question == "Your recommendation is The Hunger Games" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Teen Literature? - Fantasy"
+when
+    q : Question(question == "What kind of Teen Literature?" && answer == "Fantasy")
+then
+    insert(new Question("Your recommendations are Eragon, Insurgent, and City of Bones", ""));
+end
+
+rule "What kind of Teen Literature - Relationships?"
+when
+    q : Question(question == "What kind of Teen Literature?" && answer == "Relationships")
+then
+    insert(new Question("Your recommendations are The Fault in Our Stars and Looking for Alaska", ""));
+end
+
+rule "Your recommendations are Eragon, Insurgent, and City of Bones"
+when
+    q : Question(question == "Your recommendations are Eragon, Insurgent, and City of Bones" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendations are The Fault in Our Stars and Looking for Alaska"
+when
+    q : Question(question == "Your recommendations are The Fault in Our Stars and Looking for Alaska" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Teen Literature - Vampires?"
+when
+    q : Question(question == "What kind of Teen Literature?" && answer == "Vampires")
+then
+    insert(new Question("Your recommendations are Twilight and Vampire Academy", ""));
+end
+
+rule "Your recommendations are Twilight and Vampire Academy"
+when
+    q : Question(question == "Your recommendations are Twilight and Vampire Academy" && answer == "")
+then
+    inform(q);
+end
+
+rule "Teen Literature? - No"
+when
+    q : Question(question == "Teen Literature?" && answer == "No")
+then
+    insert(new Question("Sorry, no more recommendations available.", ""));
+end
+
+rule "Looking for Nonfiction?"
+when
+	q : Question(question == "Looking for Nonfiction?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Looking for Nonfiction - Yes"
+when
+    q : Question(question == "Looking for Nonfiction?" && answer == "Yes")
+then
+    insert(new Question("Memoirs?", ""));
+end
+
+rule "Looking for Nonfiction - No"
+when
+    q : Question(question == "Looking for Nonfiction?" && answer == "No")
+then
+    insert(new Question("In need of Advice?", ""));
+end
+
+rule "Memoirs?"
+when
+    q : Question(question == "Memoirs?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Memoirs - Yes"
+when
+    q : Question(question == "Memoirs?" && answer == "Yes")
+then
+    insert(new Question("What kind of Memoirs?", ""));
+end
+
+rule "What kind of Memoirs?"
+when
+    q : Question(question == "What kind of Memoirs?" && answer == "")
+then
+    query(q, new String[]{"Family", "Humor", "Medical", "Current Events", "Self-Fulfillment"});
+    update(q);
+end
+
+rule "What kind of Memoirs? - Family"
+when
+    q : Question(question == "What kind of Memoirs?" && answer == "Family")
+then
+    insert(new Question("Your recommendations are The Glass Castle and A Heartbreaking Work of Staggering Genius", ""));
+end
+
+rule "What kind of Memoirs - Humor?"
+when
+    q : Question(question == "What kind of Memoirs?" && answer == "Humor")
+then
+    insert(new Question("Your recommendations are Bossypants and Running with Scissors", ""));
+end
+
+rule "Your recommendations are The Glass Castle and A Heartbreaking Work of Staggering Genius"
+when
+    q : Question(question == "Your recommendations are The Glass Castle and A Heartbreaking Work of Staggering Genius" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendations are Bossypants and Running with Scissors"
+when
+    q : Question(question == "Your recommendations are Bossypants and Running with Scissors" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Memoirs? - Medical"
+when
+    q : Question(question == "What kind of Memoirs?" && answer == "Medical")
+then
+    insert(new Question("Your recommendation is Proof of Heaven: A Neurosurgeon's Journey into the Afterlife", ""));
+end
+
+rule "What kind of Memoirs - Current Events?"
+when
+    q : Question(question == "What kind of Memoirs?" && answer == "Current Events")
+then
+    insert(new Question("Your recommendation is Three Cups of Tea", ""));
+end
+
+rule "Your recommendation is Proof of Heaven: A Neurosurgeon's Journey into the Afterlife"
+when
+    q : Question(question == "Your recommendation is Proof of Heaven: A Neurosurgeon's Journey into the Afterlife" && answer == "")
+then
+    inform(q);
+end
+
+rule "Your recommendation is Three Cups of Tea"
+when
+    q : Question(question == "Your recommendation is Three Cups of Tea" && answer == "")
+then
+    inform(q);
+end
+
+rule "What kind of Memoirs - Self-Fulfillment?"
+when
+    q : Question(question == "What kind of Memoirs?" && answer == "Self-Fulfillment")
+then
+    insert(new Question("Your recommendation is Eat, Pray, Love", ""));
+end
+
+rule "Your recommendation is Eat, Pray, Love"
+when
+    q : Question(question == "Your recommendation is Eat, Pray, Love" && answer == "")
+then
+    inform(q);
+end
+
+rule "Memoirs? - No"
+when
+    q : Question(question == "Memoirs?" && answer == "No")
+then
+    insert(new Question("Food?", ""));
+end
+
+rule "Food?"
+when
+    q : Question(question == "Food?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Food? - Yes"
+when
+    q : Question(question == "Food?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is The Omnivore's Dilemma: A Natural History of Four Meals", ""));
+end
+
+rule "Food? - No"
+when
+    q : Question(question == "Food?" && answer == "No")
+then
+    insert(new Question("Business?", ""));
+end
+
+rule "Your recommendation is The Omnivore's Dilemma: A Natural History of Four Meals"
+when
+    q : Question(question == "Your recommendation is The Omnivore's Dilemma: A Natural History of Four Meals" && answer == "")
+then
+    inform(q);
+end
+
+rule "Business?"
+when
+    q : Question(question == "Business?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Business? - Yes"
+when
+    q : Question(question == "Business?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Tipping Point, Blink and Freakonomics", ""));
+end
+
+rule "Business? - No"
+when
+    q : Question(question == "Business?" && answer == "No")
+then
+    insert(new Question("Biography?", ""));
+end
+
+rule "Your recommendations are The Tipping Point, Blink and Freakonomics"
+when
+    q : Question(question == "Your recommendations are The Tipping Point, Blink and Freakonomics" && answer == "")
+then
+    inform(q);
+end
+
+rule "Biography?"
+when
+    q : Question(question == "Biography?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Biography? - Yes"
+when
+    q : Question(question == "Biography?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Immortal Life of Henrietta Lacks and Persepolis", ""));
+end
+
+rule "Biography? - No"
+when
+    q : Question(question == "Biography?" && answer == "No")
+then
+    insert(new Question("Grammar?", ""));
+end
+
+rule "Your recommendations are The Immortal Life of Henrietta Lacks and Persepolis"
+when
+    q : Question(question == "Your recommendations are The Immortal Life of Henrietta Lacks and Persepolis" && answer == "")
+then
+    inform(q);
+end
+
+rule "Grammar?"
+when
+    q : Question(question == "Grammar?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Grammar? - Yes"
+when
+    q : Question(question == "Grammar?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is Eats, Shoots and Leaves", ""));
+end
+
+rule "Grammar? - No"
+when
+    q : Question(question == "Grammar?" && answer == "No")
+then
+    insert(new Question("History Nonfiction?", ""));
+end
+
+rule "Your recommendation is Eats, Shoots and Leaves"
+when
+    q : Question(question == "Your recommendation is Eats, Shoots and Leaves" && answer == "")
+then
+    inform(q);
+end
+
+rule "History Nonfiction?"
+when
+    q : Question(question == "History Nonfiction?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "History Nonfiction? - Yes"
+when
+    q : Question(question == "History Nonfiction?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is The Devil in the White City: Murder, Magic and Madness at the Fair That Changed America", ""));
+end
+
+rule "History Nonfiction? - No"
+when
+    q : Question(question == "History Nonfiction?" && answer == "No")
+then
+    insert(new Question("Humor?", ""));
+end
+
+rule "Your recommendation is The Devil in the White City: Murder, Magic and Madness at the Fair That Changed America"
+when
+    q : Question(question == "Your recommendation is The Devil in the White City: Murder, Magic and Madness at the Fair That Changed America" && answer == "")
+then
+    inform(q);
+end
+
+rule "Humor?"
+when
+    q : Question(question == "Humor?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Humor? - Yes"
+when
+    q : Question(question == "Humor?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is Me Talk Pretty One Day", ""));
+end
+
+rule "Humor? - No"
+when
+    q : Question(question == "Humor?" && answer == "No")
+then
+    insert(new Question("Inspiration?", ""));
+end
+
+rule "Your recommendation is Me Talk Pretty One Day"
+when
+    q : Question(question == "Your recommendation is Me Talk Pretty One Day" && answer == "")
+then
+    inform(q);
+end
+
+rule "Inspiration?"
+when
+    q : Question(question == "Inspiration?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Inspiration? - Yes"
+when
+    q : Question(question == "Inspiration?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is The Last Lecture", ""));
+end
+
+rule "Inspiration? - No"
+when
+    q : Question(question == "Inspiration?" && answer == "No")
+then
+    insert(new Question("U.S. Government?", ""));
+end
+
+rule "Your recommendation is The Last Lecture"
+when
+    q : Question(question == "Your recommendation is The Last Lecture" && answer == "")
+then
+    inform(q);
+end
+
+rule "U.S. Government?"
+when
+    q : Question(question == "U.S. Government?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "U.S. Government? - Yes"
+when
+    q : Question(question == "U.S. Government?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is The Liberty Amendments: Restoring the American Republic", ""));
+end
+
+rule "U.S. Government? - No"
+when
+    q : Question(question == "U.S. Government?" && answer == "No")
+then
+    insert(new Question("Nutrition?", ""));
+end
+
+rule "Your recommendation is The Liberty Amendments: Restoring the American Republic"
+when
+    q : Question(question == "Your recommendation is The Liberty Amendments: Restoring the American Republic" && answer == "")
+then
+    inform(q);
+end
+
+rule "Nutrition?"
+when
+    q : Question(question == "Nutrition?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Nutrition - Yes"
+when
+    q : Question(question == "Nutrition?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is Fast Food Nation", ""));
+end
+
+rule "Nutrition? - No"
+when
+    q : Question(question == "Nutrition?" && answer == "No")
+then
+    insert(new Question("Sorry, no more recommendations available.", ""));
+end
+
+rule "Your recommendation is Fast Food Nation"
+when
+    q : Question(question == "Your recommendation is Fast Food Nation" && answer == "")
+then
+    inform(q);
+end
+
+rule "In need of Advice?"
+when
+	q : Question(question == "In need of Advice?" && answer == "")
+then
+	query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "In need of Advice - Yes"
+when
+    q : Question(question == "In need of Advice?" && answer == "Yes")
+then
+    insert(new Question("Relationships?", ""));
+end
+
+rule "In need of Advice - No"
+when
+    q : Question(question == "In need of Advice?" && answer == "No")
+then
+    insert(new Question("Sorry, no more recommendations available.", ""));
+end
+
+rule "Relationships?"
+when
+    q : Question(question == "Relationships?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Relationships? - Yes"
+when
+    q : Question(question == "Relationships?" && answer == "Yes")
+then
+    insert(new Question("Your recommendation is Quiet: The Power of Introverts in a World That Can't Stop Talking", ""));
+end
+
+rule "Relationships? - No"
+when
+    q : Question(question == "Relationships?" && answer == "No")
+then
+    insert(new Question("Inspirational?", ""));
+end
+
+rule "Your recommendation is Quiet: The Power of Introverts in a World That Can't Stop Talking"
+when
+    q : Question(question == "Your recommendation is Quiet: The Power of Introverts in a World That Can't Stop Talking" && answer == "")
+then
+    inform(q);
+end
+
+rule "Inspirational?"
+when
+    q : Question(question == "Inspirational?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Inspirational? - Yes"
+when
+    q : Question(question == "Inspirational?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Five People You Meet in Heaven and Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead", ""));
+end
+
+rule "Inspirational? - No"
+when
+    q : Question(question == "Inspirational?" && answer == "No")
+then
+    insert(new Question("Business self-help?", ""));
+end
+
+rule "Your recommendations are The Five People You Meet in Heaven and Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead"
+when
+    q : Question(question == "Your recommendations are The Five People You Meet in Heaven and Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead" && answer == "")
+then
+    inform(q);
+end
+
+rule "Business self-help?"
+when
+    q : Question(question == "Business self-help?" && answer == "")
+then
+    query(q, new String[]{"Yes", "No"});
+    update(q);
+end
+
+rule "Business self-help? - Yes"
+when
+    q : Question(question == "Business self-help?" && answer == "Yes")
+then
+    insert(new Question("Your recommendations are The Five Dysfunctions of a Team, Strengths Finder 2.0, Lean In, Good to Great, and The Power of Habit: Why We Do What We Do in Life and Business", ""));
+end
+
+rule "Business self-help? - No"
+when
+    q : Question(question == "Business self-help?" && answer == "No")
+then
+    insert(new Question("Sorry, no more recommendations available.", ""));
+end
+
+rule "Your recommendations are The Five Dysfunctions of a Team, Strengths Finder 2.0, Lean In, Good to Great, and The Power of Habit: Why We Do What We Do in Life and Business"
+when
+    q : Question(question == "Your recommendations are The Five Dysfunctions of a Team, Strengths Finder 2.0, Lean In, Good to Great, and The Power of Habit: Why We Do What We Do in Life and Business" && answer == "")
+then
+    inform(q);
+end
 
 
